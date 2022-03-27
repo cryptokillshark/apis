@@ -3,7 +3,7 @@
 require('dotenv').config()
 const Model = require('../model/Collections');
 const rq = require("request-promise");
-const web3 = require("../utils/web3");
+const web3 = require("../utils/Web3");
 const ERC721ABI = require("../utils/ERC721ABI.json");
 const ERC721NFTMarketABI = require("../utils/ERC721NFTMarketABI.json");
 const net = process.env.NET || 'testnet'
