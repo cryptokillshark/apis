@@ -27,6 +27,7 @@ module.exports = {
 
         if(req.query.star) options.$and = [{'attributes.trait_type': 'Star'}, {'attributes.value': req.query.star}]
         if(req.query.type) options.$and = [{'attributes.trait_type': 'Type'}, {'attributes.value': req.query.type}]
+        if(req.query.power) options.$and = [{'attributes.trait_type': 'Power'}, {'attributes.value': req.query.power}]
         // console.log(req.query, options)
         return Model.find(options).limit(limit).skip(skip).sort(sort).catch(e => console.log(e.toString()))
     },

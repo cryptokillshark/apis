@@ -16,10 +16,7 @@ module.exports = {
             query: Joi.object({
                 type: Joi.string(),
                 star: Joi.number(),
-                // level: Joi.string(),
-                // date: Joi.string(),
-                // fromDatetime: Joi.string(),
-                // toDatetime: Joi.string(),
+                power: Joi.number(),
                 limit: Joi.number().default(20),
                 skip: Joi.number().default(0),
                 sort: Joi.string().valid('desc', 'asc').default('desc'),
