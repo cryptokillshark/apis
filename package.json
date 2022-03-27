@@ -1,7 +1,7 @@
 {
-  "name": "loop-api",
+  "name": "cryptokillshark-api",
   "version": "1.0.0",
-  "description": "apis for Loop Starter",
+  "description": "apis for cryptokillshark",
   "main": "server.js",
   "dependencies": {
     "@hapi/boom": "^9.1.4",
@@ -37,9 +37,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:loopstarter/apis.git"
+    "url": "git+ssh://git@github.com:cryptokillshark/apis.git"
   },
   "author": "lamtanphiho",
   "license": "ISC",
-  "homepage": "https://git@github.com:loopstarter/apis.git"
+  "homepage": "git@github.com:cryptokillshark/apis.git"
 }
