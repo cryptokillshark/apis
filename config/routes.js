@@ -3,7 +3,7 @@
  */
 'use strict';
 const Pac = require('../package.json');
-// const Address = require('../route/Addresses');
+const Collections = require('../route/Collections');
 const User = require('../route/User');
 
 module.exports = [
@@ -20,11 +20,8 @@ module.exports = [
     { method: 'GET', path: '/user-nonce', config : User.getNonce},
     { method: 'POST', path: '/users', config : User.post},
     { method: 'POST', path: '/user/authenticate', config : User.postAuthenticate},
-    // { method: 'GET', path: '/txs-daily-count', config : Transactions.getDailyCount },
-    //
-    // { method: 'GET', path: '/addresses', config : Address.get },
-    // { method: 'GET', path: '/addresses-count', config : Address.getCount },
-    // { method: 'GET', path: '/addresses-count-balance', config : Address.getCountBalance },
-    // { method: 'GET', path: '/master-node', config : MasterNode.get },
-    // { method: 'GET', path: '/eth-balance/{address}', config : MasterNode.getBalance }
+
+    { method: 'POST', path: '/collections/{collectionAddress}', config : Collections.post},
+    { method: 'DELETE', path: '/collections/{collectionAddress}/{tokenId}', config : Collections.delete},
+    { method: 'GET', path: '/collections/{collectionAddress}', config : Collections.get},
 ];

@@ -1,0 +1,10 @@
+{
+  "testnet": [{
+      "name": "GUN",
+      "address": "0xa98367Af1e82aaFFDDF192383014f233a12EF57C"
+    }],
+  "mainnet": [{
+    "name": "GUN",
+    "address": "0x8ec306495E7cb7D022B19499422b40a2F35C6C52"
+  }]
+}

@@ -18,6 +18,8 @@
     "inert": "^4.2.0",
     "mongoose": "^4.11.3",
     "req": "^0.1.4",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "vision": "^4.1.1",
     "web3": "^1.7.1",
     "winston": "^2.3.1"
