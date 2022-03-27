@@ -14,7 +14,7 @@ module.exports = {
                 collectionAddress: Joi.string().required(),
             }),
             query: Joi.object({
-                rarity: Joi.number(),
+                type: Joi.string(),
                 star: Joi.number(),
                 // level: Joi.string(),
                 // date: Joi.string(),

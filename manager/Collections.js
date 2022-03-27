@@ -25,16 +25,9 @@ module.exports = {
             if(askDetails.seller == '0x0000000000000000000000000000000000000000') Model.remove({_id: d._id}).then(console.log)
         })
 
-        if(req.query.rarity != null) {
-            if(req.query.rarity == 0) options.rarity = {$lt: 1}
-            else options.rarity = req.query.rarity
-        }
-
-        if(req.query.star) options.$or = [{'attributes.metafight.head.star': req.query.star}, {'attributes.metafight.body.star': req.query.star},
-                {'attributes.metafight.left_arm.star': req.query.star}, {'attributes.metafight.right_arm.star': req.query.star},
-                {'attributes.metafight.left_leg.star': req.query.star}, {'attributes.metafight.right_leg.star': req.query.star}]
+        if(req.query.star) options.$and = [{'attributes.trait_type': 'Star'}, {'attributes.value': req.query.star}]
+        if(req.query.type) options.$and = [{'attributes.trait_type': 'Type'}, {'attributes.value': req.query.type}]
         // console.log(req.query, options)
-        if(req.query.fromDatetime && req.query.toDatetime) options.date = {date: {$gte: req.query.fromDatetime, $lte: req.query.toDatetime}}
         return Model.find(options).limit(limit).skip(skip).sort(sort).catch(e => console.log(e.toString()))
     },
     post: async (req) => {
