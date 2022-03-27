@@ -19,12 +19,10 @@ module.exports = {
         const data = await Model.find(options).limit(100)
         // console.log(process.env.ERC721NFTMARKETV2)
         const contract = new web3.eth.Contract(ERC721NFTMarketABI, process.env.ERC721NFTMARKET)
-        const contract2 = new web3.eth.Contract(ERC721NFTMarketABI, process.env.ERC721NFTMARKETV2)
         data.map(async (d) => {
-            const askDetails = await Promise.all([contract.methods._askDetails(collectionAddress, d.tokenId).call(),
-                contract2.methods._askDetails(collectionAddress, d.tokenId).call()])
+            const askDetails = await contract.methods._askDetails(collectionAddress, d.tokenId).call()
 
-            if(askDetails[0].seller == '0x0000000000000000000000000000000000000000' && askDetails[1].seller == '0x0000000000000000000000000000000000000000') Model.remove({_id: d._id}).then(console.log)
+            if(askDetails.seller == '0x0000000000000000000000000000000000000000') Model.remove({_id: d._id}).then(console.log)
         })
 
         if(req.query.rarity != null) {
