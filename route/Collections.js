@@ -30,6 +30,9 @@ module.exports = {
             return Response(req, res, 'post');
         },
         validate: {
+            params: Joi.object({
+                collectionAddress: Joi.string().required(),
+            }),
             payload: Joi.object({
                 tokenId: Joi.number().min(1).required(),
             })

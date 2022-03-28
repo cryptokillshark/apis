@@ -15,7 +15,7 @@ module.exports = {
     setup: function (manager) {
         return function (request, reply, method) {
             manager[method](request).then((data) => {
-                Logger.info(data);
+                // Logger.info(data);
                 if (data && data.statusCode) {
                     reply(data).code(data.statusCode)
                 } else {

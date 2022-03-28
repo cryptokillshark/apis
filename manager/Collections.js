@@ -1,5 +1,4 @@
 
-"use strict";
 require('dotenv').config()
 const Model = require('../model/Collections');
 const rq = require("request-promise");
@@ -15,7 +14,7 @@ module.exports = {
         const skip = req.query.skip || 0
         const sort = req.query.sort || 'asc'
         const {collectionAddress} = req.params
-        const options = {collectionAddress: web3.utils.toChecksumAddress(collectionAddress).toLowerCase()}
+        const options = {}
         const data = await Model.find(options).limit(100)
         // console.log(process.env.ERC721NFTMARKETV2)
         const contract = new web3.eth.Contract(ERC721NFTMarketABI, process.env.ERC721NFTMARKET)
@@ -25,9 +24,18 @@ module.exports = {
             if(askDetails.seller == '0x0000000000000000000000000000000000000000') Model.remove({_id: d._id}).then(console.log)
         })
 
-        if(req.query.star) options.$and = [{'attributes.trait_type': 'Star'}, {'attributes.value': req.query.star}]
-        if(req.query.type) options.$and = [{'attributes.trait_type': 'Type'}, {'attributes.value': req.query.type}]
-        if(req.query.power) options.$and = [{'attributes.trait_type': 'Power'}, {'attributes.value': req.query.power}]
+        if(req.query.star) {
+            options['attributes.trait_type'] = 'Star'
+            options['attributes.value'] = req.query.star.toString()
+        }
+        if(req.query.type) {
+            options['attributes.trait_type'] = 'Type'
+            options['attributes.value'] = req.query.type
+        }
+        if(req.query.power) {
+            options['attributes.trait_type'] = 'Power'
+            options['attributes.value'] = req.query.power
+        }
         // console.log(req.query, options)
         return Model.find(options).limit(limit).skip(skip).sort(sort).catch(e => console.log(e.toString()))
     },
