@@ -5,6 +5,7 @@
 const Pac = require('../package.json');
 const Collections = require('../route/Collections');
 const User = require('../route/User');
+const Order = require('../route/Order');
 
 module.exports = [
     { method: 'GET',
@@ -20,6 +21,8 @@ module.exports = [
     { method: 'GET', path: '/user-nonce', config : User.getNonce},
     { method: 'POST', path: '/users', config : User.post},
     { method: 'POST', path: '/user/authenticate', config : User.postAuthenticate},
+    { method: 'GET', path: '/order', config : Order.get},
+    { method: 'POST', path: '/order', config : Order.post},
 
     { method: 'POST', path: '/collections/{collectionAddress}', config : Collections.post},
     { method: 'DELETE', path: '/collections/{collectionAddress}/{tokenId}', config : Collections.delete},
