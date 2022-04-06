@@ -15,6 +15,17 @@ const sign = async () => {
 }
 // sign()
 module.exports = {
+    getMe: (req) => {
+        return Promise.all([
+            Model.findOne({_id: req.auth.credentials.user._id}),
+            Model.count({referBy: req.auth.credentials.user._id})
+        ]).then(rs => {
+            return {
+                ...rs[0],
+                referred: rs[1]
+            }
+        })
+    },
     getNonce: (req) => {
         return Model.findOne({address: req.query.address}, {nonce: 1}).then(user => {
             if(!user) return Promise.reject({statusCode: 400, message: 'Address not existed'})

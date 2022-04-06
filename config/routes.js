@@ -18,6 +18,7 @@ module.exports = [
             },
         },
     },
+    { method: 'GET', path: '/me', config : User.getMe},
     { method: 'GET', path: '/user-nonce', config : User.getNonce},
     { method: 'POST', path: '/users', config : User.post},
     { method: 'POST', path: '/user/authenticate', config : User.postAuthenticate},

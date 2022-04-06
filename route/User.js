@@ -5,6 +5,21 @@ const Manager                   = require('../manager/User');
 const Response                  = require('./response').setup(Manager);
 
 module.exports = {
+    getMe: {
+        tags: ['api', 'User'],
+        description: 'Get user\'s info',
+        handler: (req, res) => {
+            Response(req, res, 'getMe');
+        },
+        auth: {
+            strategy: 'jwt'
+        },
+        validate: {
+            headers: Joi.object({
+                authorization: Joi.string().required()
+            }).options({allowUnknown: true})
+        }
+    },
     getNonce: {
         tags: ['api', 'General'],
         description: 'Get nonce from user\'s address',
