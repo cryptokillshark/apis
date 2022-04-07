@@ -5,6 +5,18 @@ const Manager                   = require('../manager/User');
 const Response                  = require('./response').setup(Manager);
 
 module.exports = {
+    getTopRefer: {
+        tags: ['api', 'User'],
+        description: 'Get top refer',
+        handler: (req, res) => {
+            Response(req, res, 'getTopRefer');
+        },
+        validate: {
+            query: Joi.object({
+                top: Joi.number()
+            })
+        }
+    },
     getMe: {
         tags: ['api', 'User'],
         description: 'Get user\'s info',

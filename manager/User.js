@@ -15,6 +15,10 @@ const sign = async () => {
 }
 // sign()
 module.exports = {
+    getTopRefer: (req) => {
+        const limit = req.query.limit || 100
+        return Model.find().sort({refered: -1}).limit(limit)
+    },
     getMe: (req) => {
         return Promise.all([
             Model.findOne({_id: req.auth.credentials.user._id}),
@@ -39,7 +43,7 @@ module.exports = {
 
             const address = web3.eth.accounts.recover(msg, req.payload.signature)
 
-            console.log(address)
+            // console.log(address)
             if (address.toLowerCase() !== req.payload.address.toLowerCase()) return Promise.reject({statusCode: 400, errorCode: 'SIGNATURE_VERIFY_FAILED', message: 'Signature verification failed'})
             const oldUser = await Model.findOne({address: req.payload.address})
             // console.log(oldUser)
@@ -54,7 +58,11 @@ module.exports = {
                 })
             }
             const user = new Model({...req.payload})
-            return user.save().then(newUser => {
+            return user.save().then(async newUser => {
+                if(req.payload.referBy != '') {
+                    const parent = await Model.findOne({_id: req.payload.referBy})
+                    if(parent) await Model.findOneAndUpdate({_id: req.payload.referBy}, {$set: {refered: parent.refered + 1}})
+                }
                 return {
                     token: createToken({user: {...req.payload, user: 1}}),
                     user

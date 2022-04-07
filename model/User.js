@@ -12,6 +12,7 @@
      },
      role: {type: String, default: 'user'},
      status: {type: String, default: 'success'},
+     refered: {type: Number, default: 0},
      referBy: String,
      updatedAt: String,
      updatedBy: String,
