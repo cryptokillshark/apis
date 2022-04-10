@@ -55,7 +55,7 @@ module.exports = {
                 signature: Joi.string().required(),
                 address: Joi.string().required(),
                 nonce: Joi.string().required(),
-                referBy: Joi.string().required(),
+                referBy: Joi.string().allow('').required(),
             })
         }
     },
