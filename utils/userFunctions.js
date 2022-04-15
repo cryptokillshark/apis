@@ -5,6 +5,7 @@
 
 const Model = require('../model/User');
 const web3 = require("../utils/Web3");
+const Boom = require('boom');
 
 const verifySignature = (signature, address, nonce) => {
     const msg = `${process.env.SIGN_MGS} ${nonce}`;
@@ -20,10 +21,11 @@ const verifyCredentials = (req, res) => {
     return Model.findOne({ address }).then(user => {
         if (user) {
             const verify = verifySignature(signature, address, user.nonce)
-            if(verify != 1) return {statusCode: 400, message: verify}
-            return {user: {...user._doc, user: 1}}
+
+            if(verify != 1) res(Boom.badRequest(verify))
+            res({user: {...user._doc, user: 1}})
         }
-        return {statusCode: 400, message: 'address not existed'}
+        res(Boom.badRequest('address not existed'))
 
     });
 }

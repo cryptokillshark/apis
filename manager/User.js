@@ -17,11 +17,11 @@ const sign = async () => {
 module.exports = {
     getTopRefer: (req) => {
         const limit = req.query.limit || 100
-        return Model.find().sort({refered: -1}).limit(limit)
+        return Model.find({refered: {$gt: 0}}, {signature: 0}).sort({refered: -1}).limit(limit)
     },
     getMe: (req) => {
         return Promise.all([
-            Model.findOne({_id: req.auth.credentials.user._id}),
+            Model.findOne({_id: req.auth.credentials.user._id}, {signature: 0}),
             Model.count({referBy: req.auth.credentials.user._id})
         ]).then(rs => {
             return {
@@ -45,7 +45,7 @@ module.exports = {
 
             // console.log(address)
             if (address.toLowerCase() !== req.payload.address.toLowerCase()) return Promise.reject({statusCode: 400, errorCode: 'SIGNATURE_VERIFY_FAILED', message: 'Signature verification failed'})
-            const oldUser = await Model.findOne({address: req.payload.address})
+            const oldUser = await Model.findOne({address: req.payload.address}, {signature: 0})
             // console.log(oldUser)
             if(oldUser) {
                 oldUser.nonce = Math.floor(Math.random() * 1000000)
@@ -60,7 +60,7 @@ module.exports = {
             const user = new Model({...req.payload})
             return user.save().then(async newUser => {
                 if(req.payload.referBy != '') {
-                    const parent = await Model.findOne({_id: req.payload.referBy})
+                    const parent = await Model.findOne({_id: req.payload.referBy}, {signature: 0})
                     if(parent) await Model.findOneAndUpdate({_id: req.payload.referBy}, {$set: {refered: parent.refered + 1}})
                 }
                 return {
