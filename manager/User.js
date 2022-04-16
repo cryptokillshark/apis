@@ -64,7 +64,7 @@ module.exports = {
                     if(parent) await Model.findOneAndUpdate({_id: req.payload.referBy}, {$set: {refered: parent.refered + 1}})
                 }
                 return {
-                    token: createToken({user: {...req.payload, user: 1}}),
+                    token: createToken({user: {...req.payload, _id: newUser._id, user: 1}}),
                     user
                 }
             }).catch(console.log)
