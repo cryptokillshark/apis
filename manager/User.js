@@ -19,17 +19,12 @@ module.exports = {
         const limit = req.query.limit || 100
         return Model.find({refered: {$gt: 0}}, {signature: 0}).sort({refered: -1}).limit(limit)
     },
-    getMe: (req) => {
-        return Promise.all([
-            Model.findOne({_id: req.auth.credentials.user._id}),
-            Model.count({referBy: req.auth.credentials.user._id})
-        ]).then(rs => {
-            // console.log(rs)
-            return {
-                ...rs[0]._doc,
-                referred: rs[1]
-            }
-        })
+    getMe: async (req) => {
+        // console.log(req.auth.credentials.user)
+        return {
+            user: await Model.findOne({_id: req.auth.credentials.user._id}, {signature: 0}),
+            refer: await Model.find({referBy: req.auth.credentials.user._id}, {signature: 0}),
+        }
     },
     getNonce: (req) => {
         return Model.findOne({address: req.query.address}, {nonce: 1}).then(user => {
