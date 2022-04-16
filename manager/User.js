@@ -21,9 +21,10 @@ module.exports = {
     },
     getMe: (req) => {
         return Promise.all([
-            Model.findOne({_id: req.auth.credentials.user._id}, {signature: 0}),
+            Model.findOne({_id: req.auth.credentials.user._id}),
             Model.count({referBy: req.auth.credentials.user._id})
         ]).then(rs => {
+            // console.log(rs)
             return {
                 ...rs[0],
                 referred: rs[1]
