@@ -26,7 +26,7 @@ module.exports = {
         ]).then(rs => {
             // console.log(rs)
             return {
-                ...rs[0],
+                ...rs[0]._doc,
                 referred: rs[1]
             }
         })
